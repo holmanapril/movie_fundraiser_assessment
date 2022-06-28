@@ -11,7 +11,7 @@ def not_blank(question, error):
             if user_name[i].isspace():
                 count += 1
         print(count)
-        # Doesn't let user enter a name that has
+        # Doesn't let user enter a name that has less than 0 spaces
         if count <= 0:
             print(error)
         else:
