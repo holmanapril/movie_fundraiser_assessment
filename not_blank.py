@@ -1,19 +1,18 @@
 # Functions
-def name():
+def not_blank(question, error):
     valid = False
     # Keeps running loop until user inputs a valid name
     while not valid:
-        # Asks them their name
-        user_name = str(input("What is your name?")).title()
-        # Checks if input is a number
-        if user_name.isdigit():
-            # If input is a number it prints error message
-            print("Please enter a valid name")
+        # Asks question
+        user_name = str(input(question)).title()
+        # Makes sure input isn't a number or blank
+        if user_name.isnumeric() or user_name == "":
+            # If digit or blank, error message prints
+            print(error)
         else:
-            # Prints users name
             print(user_name)
             return user_name
 
 
 # Main Routine
-name()
+not_blank("What is your name?", "Please enter a valid name")
