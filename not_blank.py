@@ -1,27 +1,29 @@
 # Functions
 def not_blank(question, error):
     valid = False
-    # Keeps running loop until user inputs a valid name
+    # Asks user what their name is
+    print(question)
+    # Keeps asking user until valid input entered
     while not valid:
-        count = 0
-        # Asks question
-        user_name = str(input(question)).title().strip()
-        # Counts how many spaces there are in user_name
-        for i in range(len(user_name)):
-            if user_name[i].isspace():
-                count += 1
-        print(count)
-        # Doesn't let user enter a name that has less than 0 spaces
-        if count <= 0:
+        # stores input as user_name
+        user_name = str(input()).title().strip()
+        # Counts the amount of spaces after strip()
+        spaces = (user_name.count(" "))
+        # Replaces space with no space
+        user_name_no_space = user_name.replace(" ", "")
+        # Checks if user_name is all letter and isn't blank
+        if user_name_no_space.isalpha() is False or user_name_no_space == "":
+            # If user_name is not valid input, error message printed
             print(error)
         else:
-            # Makes sure input isn't a number or blank
-            if user_name.isalpha() is False or user_name.isnumeric() or user_name == "":
-                # If digit or blank, error message prints
-                print(error)
-            else:
+            # Checks amount of spaces
+            if spaces >= 1:
+                # If spaces is more than 0, it reprints name and ends the function
                 print(user_name)
                 return user_name
+            else:
+                # If spaces = 0, it prints error and asks again
+                print(error)
 
 
 # Main Routine
