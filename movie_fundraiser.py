@@ -115,6 +115,28 @@ def snacks(question_1, question_2, question_3, error):
             print(error)
 
 
+def payment(question, error):
+    valid = False
+    # Prints question
+    print(question)
+    while not valid:
+        try:
+            # Asks what payment method
+            payment_method = int(input())
+            if payment_method == 1:
+                # 1 corresponds to cash payment
+                payment_method = "Cash"
+                return payment_method
+            elif payment_method == 2:
+                # 2 corresponds to credit payment
+                payment_method = "Credit"
+                return payment_method
+            else:
+                print(error)
+        except ValueError:
+            print(error)
+
+
 # Main Routine
 not_blank("What is your name?", "Please enter a valid full name(first and last name)")
 user_age("How old are you?", "Please enter a valid age between(12 and 130)",
@@ -124,3 +146,8 @@ snacks("Do you want to order some/more snacks?", "Pick a snack(pick the number y
        "1. Popcorn: $2.50\n2. M&M: $3.00\n"
        "3. Pitachips: $4.50\n4.Orange Juice: $3.25\n5. Water: $2.00", "Choose an amount(maximum is 5)",
        "Please enter a valid snack number")
+payment("Will you be paying cash or credit?(enter 1 or 2)\nIf paying with credit "
+        "there will be a surcharge of 2% to the final price\nOption 1                "
+        "Option 2\nCash                    Credit", "Please enter a valid input(1 or 2)"
+        "\nOption 1                "
+        "Option 2\nCash                    Credit")
