@@ -30,6 +30,7 @@ def snacks(question_1, question_2, question_3, error):
                         print("And your choices were {} {}".format(user_snack_amount, snack_choices[user_choice - 1]))
                         options = True
             elif yes_no == "n" or yes_no == "no":
+                # Prints total price of all ordered snacks
                 print("Total price of your snacks is: ${}".format(snack_price_total))
                 return snack_price_total
         except ValueError:
