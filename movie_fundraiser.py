@@ -26,7 +26,9 @@ def not_blank(question, error):
                 print(error)
 
 
-def user_age(question, error, error_2):
+def ticket_price(question, error, error_2):
+    global cost
+    cost = 0
     valid = False
     # Continues to ask for input until valid input it entered
     while not valid:
@@ -41,6 +43,15 @@ def user_age(question, error, error_2):
                 # If too old, user will be re-asked
                 print(error)
             else:
+                if age < 16:
+                    cost += 7.5
+                    print(cost)
+                elif 16 <= age <= 64:
+                    cost += 10.5
+                    print(cost)
+                else:
+                    cost += 6.5
+                    print(cost)
                 # If valid age, code finishes
                 print(age)
                 return age
@@ -49,34 +60,8 @@ def user_age(question, error, error_2):
             print(error)
 
 
-def ticket_price(question, error):
-    cost = 0
-    age = 0
-    # Asks user what their age is
-    print(question)
-    valid = False
-    while not valid:
-        try:
-            age = int(input())
-            # If age is less than 16 the code finishes
-            if age < 16:
-                cost += 7.5
-                valid = True
-            # if age between 16 and 64 cost = 10.5 and finishes
-            elif 16 <= age <= 64:
-                cost += 10.5
-                valid = True
-            else:
-                cost += 6.5
-                valid = True
-        # If invalid input is entered error message is printed
-        except ValueError:
-            print(error)
-    print(age)
-    print(cost)
-
-
 def snacks(question_1, question_2, question_3, error):
+    global cost
     snack_price_total = 0
     # Snack choices
     snack_choices = ["Popcorn", "M&M", "Pitachips", "Orangejuice", "Water"]
@@ -110,12 +95,14 @@ def snacks(question_1, question_2, question_3, error):
             elif yes_no == "n" or yes_no == "no":
                 # Prints total price of all ordered snacks
                 print("Total price of your snacks is: ${}".format(snack_price_total))
+                cost += snack_price_total
                 return snack_price_total
         except ValueError:
             print(error)
 
 
 def payment(question, error):
+    global cost
     valid = False
     # Prints question
     print(question)
@@ -130,6 +117,7 @@ def payment(question, error):
             elif payment_method == 2:
                 # 2 corresponds to credit payment
                 payment_method = "Credit"
+                cost += cost * 0.05
                 return payment_method
             else:
                 print(error)
@@ -137,11 +125,11 @@ def payment(question, error):
             print(error)
 
 
-# Main Routine
+# Main routine
+global cost
 not_blank("What is your name?", "Please enter a valid full name(first and last name)")
-user_age("How old are you?", "Please enter a valid age between(12 and 130)",
-         "You are too young to be doing this")
-ticket_price("How old are you?", "Please enter a valid age")
+ticket_price("How old are you?", "Please enter a valid age between(12 and 130)",
+             "You are too young to be doing this")
 snacks("Do you want to order some/more snacks?", "Pick a snack(pick the number you want)\nThe options are:\n"
        "1. Popcorn: $2.50\n2. M&M: $3.00\n"
        "3. Pitachips: $4.50\n4.Orange Juice: $3.25\n5. Water: $2.00", "Choose an amount(maximum is 5)",
@@ -151,3 +139,5 @@ payment("Will you be paying cash or credit?(enter 1 or 2)\nIf paying with credit
         "Option 2\nCash                    Credit", "Please enter a valid input(1 or 2)"
         "\nOption 1                "
         "Option 2\nCash                    Credit")
+
+print(cost)
