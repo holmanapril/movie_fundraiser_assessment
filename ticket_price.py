@@ -46,6 +46,7 @@ def ticket_price_amount(question, error, error_2):
                 valid = True
         except ValueError:
             print(error)
+    print("Total cost of all tickets is ${:.2f}".format(cost))
 
 
 ticket_price_amount("How many tickets would you like?", "Please enter a valid age",
