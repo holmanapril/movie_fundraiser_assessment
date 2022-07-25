@@ -1,37 +1,57 @@
-# Functions
-def ticket_price(question, error, error_2):
+def ticket_price_amount(question, error, error_2):
+    global t_amount
     global cost
     cost = 0
+    count = 1
+    t_amount = 0
     valid = False
-    # Continues to ask for input until valid input it entered
+    valid_ticket_amount = False
+    tickets_available = 3
+    print("There are {} tickets available".format(tickets_available))
+    # Asks how many tickets user wants
     while not valid:
         try:
-            # Asks for age
-            age = int(input(question))
-            if age <= 11:
-                # If too young, code will finish
-                print(error_2)
-                return age
-            elif age >= 131:
-                # If too old, user will be re-asked
-                print(error)
-            else:
-                if age < 16:
-                    cost += 7.5
-
-                    print(cost)
-                elif 16 <= age <= 64:
-                    cost += 10.5
-                    print(cost)
+            while not valid_ticket_amount:
+                t_amount = int(input(question))
+                if t_amount > tickets_available:
+                    print(error_2)
+                    print("There are {} tickets available".format(tickets_available))
                 else:
-                    cost += 6.5
-                    print(cost)
-                # If valid age, code finishes
-                print(age)
-                return age
+                    valid_ticket_amount = True
+                    print()
+
+            while count < t_amount + 1:
+                try:
+                    # Asks for age
+                    age = int(input("What age will ticket {} be for?".format(count)))
+                    if age <= 11:
+                        # If too young, user will be re_asked
+                        print(error)
+                    elif age >= 131:
+                        # If too old, user will be re-asked
+                        print(error)
+                    else:
+                        if age < 16:
+                            # Different price for younger people
+                            print("Ticket {} will cost $7.50\n".format(count))
+                            cost += 7.5
+                            count += 1
+                        elif 16 <= age <= 64:
+                            # Different price for middle ages
+                            print("Ticket {} will cost $10.50\n".format(count))
+                            cost += 10.5
+                            count += 1
+                        else:
+                            # Different price for elderly
+                            print("Ticket {} will cost $6.50\n".format(count))
+                            cost += 6.5
+                            count += 1
+                except ValueError:
+                    print(error)
+                valid = True
         except ValueError:
-            # Prints error message if string is input
             print(error)
+    print("Total cost of all tickets is ${:.2f}".format(cost))
 
 
 def snacks(question_1, question_2, question_3, error):
@@ -104,15 +124,17 @@ def payment(question, error):
 
 def profit():
     global cost
+    global t_amount
     global profit_per_user
-    profit_per_user += 5.5
+    profit_per_user += 5.5 * t_amount
 
 
 # Main routine
 global cost
+global t_amount
 global profit_per_user
-ticket_price("How old are you?", "Please enter a valid age between(12 and 130)",
-             "You are too young to be doing this")
+ticket_price_amount("How many tickets would you like?", "Please enter a valid age",
+                    "Please enter a valid ticket amount")
 snacks("Do you want to order some/more snacks?", "Pick a snack(pick the number you want)\nThe options are:\n"
        "1. Popcorn: $2.50\n2. M&M: $3.00\n"
        "3. Pitachips: $4.50\n4.Orange Juice: $3.25\n5. Water: $2.00", "Choose an amount(maximum is 5)",
@@ -123,5 +145,5 @@ payment("Will you be paying cash or credit?(enter 1 or 2)\nIf paying with credit
         "\nOption 1                "
         "Option 2\nCash                    Credit")
 profit()
-print(cost)
-print(profit_per_user)
+print("Total cost = ${:.2f}".format(cost))
+print("Profit = ${:.2f}".format(profit_per_user))
