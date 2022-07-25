@@ -126,6 +126,7 @@ def profit():
     global cost
     global t_amount
     global profit_per_user
+    # Times profit per ticket by amount of tickets
     profit_per_user += 5.5 * t_amount
 
 
