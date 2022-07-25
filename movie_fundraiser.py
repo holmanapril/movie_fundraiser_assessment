@@ -28,12 +28,14 @@ def not_blank(question, error):
 
 def ticket_price_amount(question, error, error_2):
     global cost
+    global t_amount
     cost = 0
     count = 1
     t_amount = 0
     valid = False
     valid_ticket_amount = False
     tickets_available = 3
+    # Tells user how many tickets are available
     print("There are {} tickets available".format(tickets_available))
     # Asks how many tickets user wants
     while not valid:
@@ -143,8 +145,18 @@ def payment(question, error):
             print(error)
 
 
+def profit():
+    global cost
+    global t_amount
+    global profit_per_user
+    # Times profit per ticket by amount of tickets
+    profit_per_user += 5.5 * t_amount
+
+
 # Main routine
 global cost
+global t_amount
+global profit_per_user
 not_blank("What is your name?", "Please enter a valid full name(first and last name)")
 ticket_price_amount("How many tickets would you like?", "Please enter a valid age",
                     "Please enter a valid ticket amount")
@@ -157,5 +169,6 @@ payment("Will you be paying cash or credit?(enter 1 or 2)\nIf paying with credit
         "Option 2\nCash                    Credit", "Please enter a valid input(1 or 2)"
         "\nOption 1                "
         "Option 2\nCash                    Credit")
-
-print(cost)
+profit()
+print("Total cost = ${:.2f}".format(cost))
+print("Profit = ${:.2f}".format(profit_per_user))
