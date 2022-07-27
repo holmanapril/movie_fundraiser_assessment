@@ -113,7 +113,7 @@ def snacks(question_1, question_2, question_3, error):
                         # Prints snack price of snack just chosen
                         print("${:.2f}".format(snack_price))
                         # Prints choices to check
-                        print("And your choices were {} {}".format(user_snack_amount, snack_choices[user_choice - 1]))
+                        print("And your choice was {} {}".format(user_snack_amount, snack_choices[user_choice - 1]))
                         if user_choice == 1:
                             current_user_list[3] += user_snack_amount
                             summary_details[1] += user_snack_amount
