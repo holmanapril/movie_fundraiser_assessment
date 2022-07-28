@@ -33,12 +33,12 @@ def not_blank(question, error):
 def ticket_price_amount(question, error, error_2):
     global cost
     global t_amount
+    global tickets_available
     cost = 0
     count = 1
     t_amount = 0
     valid = False
     valid_ticket_amount = False
-    tickets_available = 3
     # Tells user how many tickets are available
     print("There are {} tickets available".format(tickets_available))
     # Asks how many tickets user wants
@@ -184,6 +184,7 @@ global cost
 global t_amount
 global profit_per_user
 global payment_method
+tickets_available = 150
 pd.set_option("display.max_rows", None, "display.max_columns", None, "display.expand_frame_repr", False)
 one_ticket = ["Name", "ticket amount", "total ticket price", 0, 0, 0, 0, 0, "snack price",
               "payment method", "total price"]
