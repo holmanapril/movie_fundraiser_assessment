@@ -119,19 +119,19 @@ def snacks(question_1, question_2, question_3, error):
                         print("And your choice was {} {}".format(user_snack_amount, snack_choices[user_choice - 1]))
                         if user_choice == 1:
                             one_ticket[3] += user_snack_amount
-                            summary_details[1] += user_snack_amount
+                            summary_details[0][1] += user_snack_amount
                         elif user_choice == 2:
                             one_ticket[4] += user_snack_amount
-                            summary_details[2] += user_snack_amount
+                            summary_details[0][2] += user_snack_amount
                         elif user_choice == 3:
                             one_ticket[5] += user_snack_amount
-                            summary_details[3] += user_snack_amount
+                            summary_details[0][3] += user_snack_amount
                         elif user_choice == 4:
                             one_ticket[6] += user_snack_amount
-                            summary_details[4] += user_snack_amount
+                            summary_details[0][4] += user_snack_amount
                         else:
                             one_ticket[7] += user_snack_amount
-                            summary_details[5] += user_snack_amount
+                            summary_details[0][5] += user_snack_amount
                         options = True
             elif yes_no == "n" or yes_no == "no":
                 # Prints total price of all ordered snacks
@@ -176,7 +176,7 @@ def profit():
     profit_per_user = 0
     # Times profit per ticket by amount of tickets
     profit_per_user += 5.5 * t_amount
-    summary_details[0] += profit_per_user
+    summary_details[0][0] += profit_per_user
 
 
 # Main routine
@@ -188,7 +188,7 @@ pd.set_option("display.max_rows", None, "display.max_columns", None, "display.ex
 one_ticket = ["Name", "ticket amount", "total ticket price", 0, 0, 0, 0, 0, "snack price",
               "payment method", "total price"]
 current_user_list = []
-summary_details = [0, 0, 0, 0, 0, 0]
+summary_details = [[0, 0, 0, 0, 0, 0]]
 not_blank("What is your name?", "Please enter a valid full name(first and last name)")
 ticket_price_amount("How many tickets would you like?", "Please enter a valid age",
                     "Please enter a valid ticket amount")
@@ -212,4 +212,6 @@ current_ticket = pd.DataFrame(current_user_list, columns=["Name", "Ticket Amount
                                                           "Popcorn", "M&M's", "Pita Chips", "Orange Juice",
                                                           "Water", "Snack Price", "Payment method",
                                                           "Order total"])
-print(current_ticket)
+total_summary = pd.DataFrame(summary_details, columns=["Profit", "Popcorn", "M&M's", "Pita Chips", "Orange Juice",
+                                                       "Water"])
+
