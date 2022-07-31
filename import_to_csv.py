@@ -50,6 +50,7 @@ def ticket_price_amount(question, error, error_2):
                     print(error_2)
                     print("There are {} tickets available".format(tickets_available))
                 else:
+                    tickets_available -= t_amount
                     valid_ticket_amount = True
                     one_ticket[1] = t_amount
                     print()
@@ -184,36 +185,46 @@ global cost
 global t_amount
 global profit_per_user
 global payment_method
-tickets_available = 150
-pd.set_option("display.max_rows", None, "display.max_columns", None, "display.expand_frame_repr", False)
-one_ticket = ["Name", "ticket amount", "total ticket price", 0, 0, 0, 0, 0, "snack price",
-              "payment method", "total price"]
-current_user_list = []
+global current_user_list
+all_tickets = []
 summary_details = [[0, 0, 0, 0, 0, 0]]
-not_blank("What is your name?", "Please enter a valid full name(first and last name)")
-ticket_price_amount("How many tickets would you like?", "Please enter a valid age",
-                    "Please enter a valid ticket amount")
-snacks("Do you want to order some/more snacks?", "Pick a snack(pick the number you want)\nThe options are:\n"
-       "1. Popcorn: $2.50\n2. M&M: $3.00\n"
-       "3. Pitachips: $4.50\n4.Orange Juice: $3.25\n5. Water: $2.00", "Choose an amount(maximum is 5)",
-       "Please enter a valid snack number")
-payment("Will you be paying cash or credit?(enter 1 or 2)\nIf paying with credit "
-        "there will be a surcharge of 2% to the final price\nOption 1                "
-        "Option 2\nCash                    Credit", "Please enter a valid input(1 or 2)"
-        "\nOption 1                "
-        "Option 2\nCash                    Credit")
-profit()
-one_ticket[10] = cost
-current_user_list.append(one_ticket)
+tickets_available = 10
+while tickets_available > 0:
+    pd.set_option("display.max_rows", None, "display.max_columns", None, "display.expand_frame_repr", False)
+    one_ticket = ["Name", "ticket amount", "total ticket price", 0, 0, 0, 0, 0, "snack price",
+                  "payment method", "total price"]
+    current_user_list = []
+    not_blank("What is your name?", "Please enter a valid full name(first and last name)")
+    ticket_price_amount("How many tickets would you like?", "Please enter a valid age",
+                        "Please enter a valid ticket amount")
+    snacks("Do you want to order some/more snacks?", "Pick a snack(pick the number you want)\nThe options are:\n"
+           "1. Popcorn: $2.50\n2. M&M: $3.00\n"
+           "3. Pitachips: $4.50\n4.Orange Juice: $3.25\n5. Water: $2.00", "Choose an amount(maximum is 5)",
+           "Please enter a valid snack number")
+    payment("Will you be paying cash or credit?(enter 1 or 2)\nIf paying with credit "
+            "there will be a surcharge of 2% to the final price\nOption 1                "
+            "Option 2\nCash                    Credit", "Please enter a valid input(1 or 2)"
+            "\nOption 1                "
+            "Option 2\nCash                    Credit")
+    profit()
+    print(profit_per_user)
+    one_ticket[10] = cost
+    current_user_list.append(one_ticket)
+    current_ticket = pd.DataFrame(current_user_list, columns=["Name", "Ticket Amount", "Total Ticket Price",
+                                                              "Popcorn", "M&M's", "Pita Chips", "Orange Juice",
+                                                              "Water", "Snack Price", "Payment method",
+                                                              "Order total"])
+    print(current_ticket)
+    all_tickets.append(one_ticket)
 print("Total cost = ${:.2f}".format(cost))
 print("Profit = ${:.2f}".format(profit_per_user))
+print(all_tickets)
 print(current_user_list)
-print(summary_details)
-current_ticket = pd.DataFrame(current_user_list, columns=["Name", "Ticket Amount", "Total Ticket Price",
-                                                          "Popcorn", "M&M's", "Pita Chips", "Orange Juice",
-                                                          "Water", "Snack Price", "Payment method",
-                                                          "Order total"])
+all_ticket_details = pd.DataFrame(all_tickets, columns=["Name", "Ticket Amount", "Total Ticket Price",
+                                                        "Popcorn", "M&M's", "Pita Chips", "Orange Juice",
+                                                        "Water", "Snack Price", "Payment method",
+                                                        "Order total"])
 total_summary = pd.DataFrame(summary_details, columns=["Profit", "Popcorn", "M&M's", "Pita Chips", "Orange Juice",
                                                        "Water"])
-current_ticket.to_csv('ticket_details.csv', header=True)
+all_ticket_details.to_csv('ticket_details.csv', header=True)
 total_summary.to_csv('summary_details.csv', header=True)
