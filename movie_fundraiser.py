@@ -1,3 +1,6 @@
+import pandas as pd
+
+
 # Functions
 def not_blank(question, error):
     valid = False
@@ -20,7 +23,7 @@ def not_blank(question, error):
             if spaces >= 1:
                 # If spaces is more than 0, it reprints name and ends the function
                 print(user_name)
-                current_user_list[0] = user_name
+                one_ticket[0] = user_name
                 return user_name
             else:
                 # If spaces = 0, it prints error and asks again
@@ -30,12 +33,12 @@ def not_blank(question, error):
 def ticket_price_amount(question, error, error_2):
     global cost
     global t_amount
+    global tickets_available
     cost = 0
     count = 1
     t_amount = 0
     valid = False
     valid_ticket_amount = False
-    tickets_available = 3
     # Tells user how many tickets are available
     print("There are {} tickets available".format(tickets_available))
     # Asks how many tickets user wants
@@ -47,8 +50,9 @@ def ticket_price_amount(question, error, error_2):
                     print(error_2)
                     print("There are {} tickets available".format(tickets_available))
                 else:
+                    tickets_available -= t_amount
                     valid_ticket_amount = True
-                    current_user_list[1] = t_amount
+                    one_ticket[1] = t_amount
                     print()
 
             while count < t_amount + 1:
@@ -79,7 +83,7 @@ def ticket_price_amount(question, error, error_2):
                 valid = True
         except ValueError:
             print(error)
-    current_user_list[2] = cost
+    one_ticket[2] = cost
     print("Total cost of all tickets is ${:.2f}".format(cost))
 
 
@@ -115,26 +119,26 @@ def snacks(question_1, question_2, question_3, error):
                         # Prints choices to check
                         print("And your choice was {} {}".format(user_snack_amount, snack_choices[user_choice - 1]))
                         if user_choice == 1:
-                            current_user_list[3] += user_snack_amount
-                            summary_details[1] += user_snack_amount
+                            one_ticket[3] += user_snack_amount
+                            summary_details[0][1] += user_snack_amount
                         elif user_choice == 2:
-                            current_user_list[4] += user_snack_amount
-                            summary_details[2] += user_snack_amount
+                            one_ticket[4] += user_snack_amount
+                            summary_details[0][2] += user_snack_amount
                         elif user_choice == 3:
-                            current_user_list[5] += user_snack_amount
-                            summary_details[3] += user_snack_amount
+                            one_ticket[5] += user_snack_amount
+                            summary_details[0][3] += user_snack_amount
                         elif user_choice == 4:
-                            current_user_list[6] += user_snack_amount
-                            summary_details[4] += user_snack_amount
+                            one_ticket[6] += user_snack_amount
+                            summary_details[0][4] += user_snack_amount
                         else:
-                            current_user_list[7] += user_snack_amount
-                            summary_details[5] += user_snack_amount
+                            one_ticket[7] += user_snack_amount
+                            summary_details[0][5] += user_snack_amount
                         options = True
             elif yes_no == "n" or yes_no == "no":
                 # Prints total price of all ordered snacks
                 print("Total price of your snacks is: ${}".format(snack_price_total))
                 cost += snack_price_total
-                current_user_list[8] = snack_price_total
+                one_ticket[8] = snack_price_total
                 return snack_price_total
         except ValueError:
             print(error)
@@ -153,13 +157,13 @@ def payment(question, error):
             if payment_method == 1:
                 # 1 corresponds to cash payment
                 payment_method = "Cash"
-                current_user_list[9] = payment_method
+                one_ticket[9] = payment_method
                 return payment_method
             elif payment_method == 2:
                 # 2 corresponds to credit payment
                 payment_method = "Credit"
                 cost += cost * 0.05
-                current_user_list[9] = payment_method
+                one_ticket[9] = payment_method
                 return payment_method
             else:
                 print(error)
@@ -173,7 +177,7 @@ def profit():
     profit_per_user = 0
     # Times profit per ticket by amount of tickets
     profit_per_user += 5.5 * t_amount
-    summary_details[0] += profit_per_user
+    summary_details[0][0] += profit_per_user
 
 
 # Main routine
@@ -181,24 +185,46 @@ global cost
 global t_amount
 global profit_per_user
 global payment_method
-current_user_list = ["Name", "ticket amount", "total ticket price", 0, 0, 0, 0, 0,
-                     "snack price", "payment method", "total price"]
-summary_details = [0, 0, 0, 0, 0, 0]
-not_blank("What is your name?", "Please enter a valid full name(first and last name)")
-ticket_price_amount("How many tickets would you like?", "Please enter a valid age",
-                    "Please enter a valid ticket amount")
-snacks("Do you want to order some/more snacks?", "Pick a snack(pick the number you want)\nThe options are:\n"
-       "1. Popcorn: $2.50\n2. M&M: $3.00\n"
-       "3. Pitachips: $4.50\n4.Orange Juice: $3.25\n5. Water: $2.00", "Choose an amount(maximum is 5)",
-       "Please enter a valid snack number")
-payment("Will you be paying cash or credit?(enter 1 or 2)\nIf paying with credit "
-        "there will be a surcharge of 2% to the final price\nOption 1                "
-        "Option 2\nCash                    Credit", "Please enter a valid input(1 or 2)"
-        "\nOption 1                "
-        "Option 2\nCash                    Credit")
-profit()
-current_user_list[10] = cost
+global current_user_list
+all_tickets = []
+summary_details = [[0, 0, 0, 0, 0, 0]]
+tickets_available = 10
+while tickets_available > 0:
+    pd.set_option("display.max_rows", None, "display.max_columns", None, "display.expand_frame_repr", False)
+    one_ticket = ["Name", "ticket amount", "total ticket price", 0, 0, 0, 0, 0, "snack price",
+                  "payment method", "total price"]
+    current_user_list = []
+    not_blank("What is your name?", "Please enter a valid full name(first and last name)")
+    ticket_price_amount("How many tickets would you like?", "Please enter a valid age",
+                        "Please enter a valid ticket amount")
+    snacks("Do you want to order some/more snacks?", "Pick a snack(pick the number you want)\nThe options are:\n"
+           "1. Popcorn: $2.50\n2. M&M: $3.00\n"
+           "3. Pitachips: $4.50\n4.Orange Juice: $3.25\n5. Water: $2.00", "Choose an amount(maximum is 5)",
+           "Please enter a valid snack number")
+    payment("Will you be paying cash or credit?(enter 1 or 2)\nIf paying with credit "
+            "there will be a surcharge of 2% to the final price\nOption 1                "
+            "Option 2\nCash                    Credit", "Please enter a valid input(1 or 2)"
+            "\nOption 1                "
+            "Option 2\nCash                    Credit")
+    profit()
+    print(profit_per_user)
+    one_ticket[10] = cost
+    current_user_list.append(one_ticket)
+    current_ticket = pd.DataFrame(current_user_list, columns=["Name", "Ticket Amount", "Total Ticket Price",
+                                                              "Popcorn", "M&M's", "Pita Chips", "Orange Juice",
+                                                              "Water", "Snack Price", "Payment method",
+                                                              "Order total"])
+    print(current_ticket)
+    all_tickets.append(one_ticket)
 print("Total cost = ${:.2f}".format(cost))
 print("Profit = ${:.2f}".format(profit_per_user))
+print(all_tickets)
 print(current_user_list)
-print(summary_details)
+all_ticket_details = pd.DataFrame(all_tickets, columns=["Name", "Ticket Amount", "Total Ticket Price",
+                                                        "Popcorn", "M&M's", "Pita Chips", "Orange Juice",
+                                                        "Water", "Snack Price", "Payment method",
+                                                        "Order total"])
+total_summary = pd.DataFrame(summary_details, columns=["Profit", "Popcorn", "M&M's", "Pita Chips", "Orange Juice",
+                                                       "Water"])
+all_ticket_details.to_csv('ticket_details.csv', header=True)
+total_summary.to_csv('summary_details.csv', header=True)
