@@ -17,7 +17,7 @@ def snacks(question_1, question_2, question_3, error):
                     # User inputs snack amount
                     user_snack_amount = int(input(question_3))
                     # Errors if invalid input entered
-                    if user_choice >= 5 or user_choice < 0 or user_snack_amount > 5 or user_snack_amount < 1:
+                    if user_choice > 5 or user_choice < 1 or user_snack_amount > 5 or user_snack_amount < 1:
                         print(error)
                     else:
                         # Calculates snack pricing
