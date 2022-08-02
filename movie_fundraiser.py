@@ -2,6 +2,16 @@ import pandas as pd
 
 
 # Functions
+def decoration(greeting, symbol):
+    sides = symbol
+    greeting = "{} {} {}".format(sides, greeting, sides)
+    top_bottom = symbol * len(greeting)
+
+    print(top_bottom)
+    print(greeting)
+    print(top_bottom)
+
+
 def not_blank(question, error):
     valid = False
     # Asks user what their name is
@@ -194,6 +204,7 @@ while tickets_available > 0:
     one_ticket = ["Name", "ticket amount", "total ticket price", 0, 0, 0, 0, 0, "snack price",
                   "payment method", "total price"]
     current_user_list = []
+    decoration("Welcome to the Movie Fundraiser", "*")
     not_blank("What is your name?", "Please enter a valid full name(first and last name)")
     ticket_price_amount("How many tickets would you like?", "Please enter a valid age",
                         "Please enter a valid ticket amount")
