@@ -124,8 +124,8 @@ def snacks(question_1, question_2, question_3, error, error_2):
                         # Adds to total
                         snack_price_total += snack_price
                         # Prints choices to and price
-                        print("You chose {} {}\nCost = ${:.2f}".format(user_snack_amount, snack_choices[user_choice - 1]
-                                                                       , snack_price))
+                        print("You chose {} {}\nCost = ${:.2f}".format(user_snack_amount,
+                                                                       snack_choices[user_choice - 1], snack_price))
                         if user_choice == 1:
                             one_ticket[3] += user_snack_amount
                             if one_ticket[3] >= 6:
@@ -164,11 +164,12 @@ def snacks(question_1, question_2, question_3, error, error_2):
                 # Prints snack choices in easy to read way
                 print("Your snack choices are:\n")
                 print("Popcorn   M&M's   Pita Chips   Orange Juice   Water")
-                print("  {}         {}         {}             {}          {}".format(one_ticket[3], one_ticket[4],
-                                                                                     one_ticket[5], one_ticket[6],
-                                                                                     one_ticket[7]))
+                print("  {}        {}          {}             {}           {}".format(one_ticket[3], one_ticket[4],
+                                                                                      one_ticket[5], one_ticket[6],
+                                                                                      one_ticket[7]))
                 # Prints total price of all ordered snacks
-                decoration("\nTotal price of your snacks is: ${}".format(snack_price_total), "-")
+                print()
+                decoration("Total price of your snacks is: ${}".format(snack_price_total), "-")
                 print()
                 return snack_price_total
         except ValueError:
@@ -230,7 +231,7 @@ while tickets_available > 0:
     not_blank("What is your name?", "Please enter a valid full name(first and last name)")
     ticket_price_amount("How many tickets would you like?", "Please enter a valid age",
                         "Please enter a valid ticket amount")
-    snacks("Do you want to order some/more snacks?", "\nPick a snack(pick the number you want), "
+    snacks("\nDo you want to order some/more snacks?", "\nPick a snack(pick the number you want), "
            "if you no longer want to order snack press enter\n\nThe options are:\n"
            "1. Popcorn: $2.50\n2. M&M: $3.00\n"
            "3. Pitachips: $4.50\n4. Orange Juice: $3.25\n5. Water: $2.00", "Choose an amount(maximum is 5)",
@@ -249,6 +250,7 @@ while tickets_available > 0:
                                                               "Water", "Snack Price", "Payment method",
                                                               "Order total"])
     print(current_ticket)
+    print("\n\n\n\n")
     all_tickets.append(one_ticket)
 
 print("Total cost = ${:.2f}".format(cost))
