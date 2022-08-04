@@ -6,7 +6,6 @@ def decoration(greeting, symbol):
     sides = symbol
     greeting = "{} {} {}".format(sides, greeting, sides)
     top_bottom = symbol * len(greeting)
-
     print(top_bottom)
     print(greeting)
     print(top_bottom)
@@ -32,7 +31,7 @@ def not_blank(question, error):
             # Checks amount of spaces
             if spaces >= 1:
                 # If spaces is more than 0, it reprints name and ends the function
-                print(user_name)
+                print("Welcome, {}".format(user_name))
                 one_ticket[0] = user_name
                 return user_name
             else:
@@ -50,7 +49,7 @@ def ticket_price_amount(question, error, error_2):
     valid = False
     valid_ticket_amount = False
     # Tells user how many tickets are available
-    print("There are {} tickets available".format(tickets_available))
+    print("\nThere are {} tickets available,".format(tickets_available))
     # Asks how many tickets user wants
     while not valid:
         try:
@@ -68,7 +67,7 @@ def ticket_price_amount(question, error, error_2):
             while count < t_amount + 1:
                 try:
                     # Asks for age
-                    age = int(input("What age will ticket {} be for?".format(count)))
+                    age = int(input("What age will Ticket {} be for?".format(count)))
                     if age <= 11:
                         # If too young, user will be re_asked
                         print(error)
@@ -94,10 +93,10 @@ def ticket_price_amount(question, error, error_2):
         except ValueError:
             print(error)
     one_ticket[2] = cost
-    print("Total cost of all tickets is ${:.2f}".format(cost))
+    print("Total cost of all tickets is ${:.2f}\n".format(cost))
 
 
-def snacks(question_1, question_2, question_3, error):
+def snacks(question_1, question_2, question_3, error, error_2):
     global cost
     snack_price_total = 0
     # Snack choices
@@ -124,31 +123,53 @@ def snacks(question_1, question_2, question_3, error):
                         snack_price = snack_prices[user_choice - 1] * user_snack_amount
                         # Adds to total
                         snack_price_total += snack_price
-                        # Prints snack price of snack just chosen
-                        print("${:.2f}".format(snack_price))
-                        # Prints choices to check
-                        print("And your choice was {} {}".format(user_snack_amount, snack_choices[user_choice - 1]))
+                        # Prints choices to and price
+                        print("You chose {} {}\nCost = ${:.2f}".format(user_snack_amount, snack_choices[user_choice - 1]
+                                                                       , snack_price))
                         if user_choice == 1:
                             one_ticket[3] += user_snack_amount
+                            if one_ticket[3] >= 6:
+                                one_ticket[3] -= user_choice
+                                print(error_2)
                             summary_details[0][1] += user_snack_amount
                         elif user_choice == 2:
                             one_ticket[4] += user_snack_amount
+                            if one_ticket[4] >= 6:
+                                one_ticket[4] -= user_choice
+                                print(error_2)
                             summary_details[0][2] += user_snack_amount
                         elif user_choice == 3:
                             one_ticket[5] += user_snack_amount
+                            # Stops user from ordering more than 5 of any type of snack
+                            if one_ticket[5] >= 6:
+                                one_ticket[5] -= user_choice
+                                print(error_2)
                             summary_details[0][3] += user_snack_amount
                         elif user_choice == 4:
                             one_ticket[6] += user_snack_amount
+                            if one_ticket[6] >= 6:
+                                one_ticket[6] -= user_choice
+                                print(error_2)
                             summary_details[0][4] += user_snack_amount
                         else:
                             one_ticket[7] += user_snack_amount
+                            if one_ticket[7] >= 6:
+                                one_ticket[7] -= user_choice
+                                print(error_2)
                             summary_details[0][5] += user_snack_amount
                         options = True
             elif yes_no == "n" or yes_no == "no":
-                # Prints total price of all ordered snacks
-                print("Total price of your snacks is: ${}".format(snack_price_total))
                 cost += snack_price_total
                 one_ticket[8] = snack_price_total
+                # Prints snack choices in easy to read way
+                print("Your snack choices are:\n")
+                print("Popcorn   M&M's   Pita Chips   Orange Juice   Water")
+                print("  {}         {}         {}             {}          {}".format(one_ticket[3], one_ticket[4],
+                                                                                     one_ticket[5], one_ticket[6],
+                                                                                     one_ticket[7]))
+                # Prints total price of all ordered snacks
+                decoration("\nTotal price of your snacks is: ${}".format(snack_price_total), "-")
+                print()
                 return snack_price_total
         except ValueError:
             print(error)
@@ -159,6 +180,7 @@ def payment(question, error):
     global payment_method
     valid = False
     # Prints question
+    decoration("Payment", "*")
     print(question)
     while not valid:
         try:
@@ -204,15 +226,16 @@ while tickets_available > 0:
     one_ticket = ["Name", "ticket amount", "total ticket price", 0, 0, 0, 0, 0, "snack price",
                   "payment method", "total price"]
     current_user_list = []
-    decoration("Welcome to the Movie Fundraiser", "*")
+    decoration("Movie Fundraiser", "*")
     not_blank("What is your name?", "Please enter a valid full name(first and last name)")
     ticket_price_amount("How many tickets would you like?", "Please enter a valid age",
                         "Please enter a valid ticket amount")
-    snacks("Do you want to order some/more snacks?", "Pick a snack(pick the number you want)\nThe options are:\n"
+    snacks("Do you want to order some/more snacks?", "\nPick a snack(pick the number you want), "
+           "if you no longer want to order snack press enter\n\nThe options are:\n"
            "1. Popcorn: $2.50\n2. M&M: $3.00\n"
-           "3. Pitachips: $4.50\n4.Orange Juice: $3.25\n5. Water: $2.00", "Choose an amount(maximum is 5)",
-           "Please enter a valid snack number")
-    payment("Will you be paying cash or credit?(enter 1 or 2)\nIf paying with credit "
+           "3. Pitachips: $4.50\n4. Orange Juice: $3.25\n5. Water: $2.00", "Choose an amount(maximum is 5)",
+           "Please enter a valid snack number", "Sorry, You can only order a total of 5 of each snack")
+    payment("\nWill you be paying cash or credit?(enter 1 or 2)\nIf paying with credit "
             "there will be a surcharge of 2% to the final price\nOption 1                "
             "Option 2\nCash                    Credit", "Please enter a valid input(1 or 2)"
             "\nOption 1                "
@@ -227,10 +250,12 @@ while tickets_available > 0:
                                                               "Order total"])
     print(current_ticket)
     all_tickets.append(one_ticket)
+
 print("Total cost = ${:.2f}".format(cost))
 print("Profit = ${:.2f}".format(profit_per_user))
 print(all_tickets)
 print(current_user_list)
+print("\n\n\n")
 all_ticket_details = pd.DataFrame(all_tickets, columns=["Name", "Ticket Amount", "Total Ticket Price",
                                                         "Popcorn", "M&M's", "Pita Chips", "Orange Juice",
                                                         "Water", "Snack Price", "Payment method",
