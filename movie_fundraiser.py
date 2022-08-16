@@ -260,7 +260,8 @@ while tickets_available > 0:
     current_user_list = []
     decoration("Movie Fundraiser", "*")
     not_blank("What is your name?", "Please enter a valid full name(first and last name)")
-    ticket_price_amount("How many tickets would you like?", "Please enter a valid age/number\n",
+    ticket_price_amount("How many tickets would you like?", "Please enter a valid age/number\n"
+                        "(if entering age, ticket cannot be for someone younger than 12) \n",
                         "Please enter a valid ticket amount")
     snacks("\nDo you want to order some/more snacks?", "\nPick a snack(pick the number you want), "
            "if you no longer want to order snack press enter\n\nThe options are:\n"
