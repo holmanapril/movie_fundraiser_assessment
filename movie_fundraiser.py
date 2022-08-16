@@ -179,10 +179,8 @@ def snacks(question_1, question_2, question_3, error, error_2):
 
 def payment(question, error):
     global cost
-    global payment_method
     global user_will_pay
     global one_ticket
-    global confirm_user_pays
     user_will_pay = False
     valid = False
     # Prints question
@@ -248,11 +246,9 @@ def profit():
 global cost
 global t_amount
 global profit_per_user
-global payment_method
 global current_user_list
 global user_will_pay
 global snack_price_total
-global confirm_user_pays
 all_tickets = []
 summary_details = [[0, 0, 0, 0, 0, 0]]
 tickets_available = 10
