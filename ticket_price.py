@@ -4,7 +4,7 @@ def ticket_price_amount(question, error, error_2):
     t_amount = 0
     valid = False
     valid_ticket_amount = False
-    tickets_available = 3
+    tickets_available = 7
     print("There are {} tickets available".format(tickets_available))
     # Asks how many tickets user wants
     while not valid:
