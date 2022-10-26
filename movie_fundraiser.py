@@ -99,6 +99,7 @@ def ticket_price_amount(question, error, error_2):
 def snacks(question_1, question_2, question_3, error, error_2):
     global cost
     global snack_price_total
+    global user_snack_amount
     snack_price_total = 0
     # Snack choices
     snack_choices = ["Popcorn", "M&M", "Pitachips", "Orangejuice", "Water"]
@@ -132,32 +133,37 @@ def snacks(question_1, question_2, question_3, error, error_2):
                             if one_ticket[3] >= 6:
                                 one_ticket[3] -= user_snack_amount
                                 print(error_2)
-                            summary_details[0][1] += user_snack_amount
+                            else:
+                                one_user_summary[1] += user_snack_amount
                         elif user_choice == 2:
                             one_ticket[4] += user_snack_amount
                             if one_ticket[4] >= 6:
                                 one_ticket[4] -= user_snack_amount
                                 print(error_2)
-                            summary_details[0][2] += user_snack_amount
+                            else:
+                                one_user_summary[2] += user_snack_amount
                         elif user_choice == 3:
                             one_ticket[5] += user_snack_amount
                             # Stops user from ordering more than 5 of any type of snack
                             if one_ticket[5] >= 6:
                                 one_ticket[5] -= user_snack_amount
                                 print(error_2)
-                            summary_details[0][3] += user_snack_amount
+                            else:
+                                one_user_summary[3] += user_snack_amount
                         elif user_choice == 4:
                             one_ticket[6] += user_snack_amount
                             if one_ticket[6] >= 6:
                                 one_ticket[6] -= user_snack_amount
                                 print(error_2)
-                            summary_details[0][4] += user_snack_amount
+                            else:
+                                one_user_summary[4] += user_snack_amount
                         else:
                             one_ticket[7] += user_snack_amount
                             if one_ticket[7] >= 6:
                                 one_ticket[7] -= user_snack_amount
                                 print(error_2)
-                            summary_details[0][5] += user_snack_amount
+                            else:
+                                one_user_summary[5] += user_snack_amount
                         options = True
             elif yes_no == "n" or yes_no == "no":
                 cost += snack_price_total
@@ -181,6 +187,7 @@ def payment(question, error):
     global cost
     global user_will_pay
     global one_ticket
+    global one_user_summary
     user_will_pay = False
     valid = False
     # Prints question
@@ -194,9 +201,15 @@ def payment(question, error):
                 decoration("Have a nice rest of your day", "^")
                 print("\n\n\n")
                 one_ticket = []
+                one_user_summary = []
                 valid = True
             elif confirm_user_pays == "y" or confirm_user_pays == "yes":
                 user_will_pay = True
+                summary_details[0][1] += one_user_summary[1]
+                summary_details[0][2] += one_user_summary[2]
+                summary_details[0][3] += one_user_summary[3]
+                summary_details[0][4] += one_user_summary[4]
+                summary_details[0][5] += one_user_summary[5]
                 print(question)
                 valid = False
                 while not valid:
@@ -249,10 +262,12 @@ global profit_per_user
 global current_user_list
 global user_will_pay
 global snack_price_total
+global user_snack_amount
 all_tickets = []
 summary_details = [[0, 0, 0, 0, 0, 0]]
 tickets_available = 10
 while tickets_available > 0:
+    one_user_summary = [0, 0, 0, 0, 0, 0]
     # Using all of my functions
     pd.set_option("display.max_rows", None, "display.max_columns", None, "display.expand_frame_repr", False)
     one_ticket = ["Name", "ticket amount", "total ticket price", 0, 0, 0, 0, 0, "snack price",
@@ -264,11 +279,11 @@ while tickets_available > 0:
                         "(if entering age, ticket cannot be for someone younger than 12) \n",
                         "Please enter a valid ticket amount")
     snacks("\nDo you want to order some/more snacks?", "\nPick a snack(pick the number you want), "
-           "if you no longer want to order snack press enter\n\nThe options are:\n"
+           "if you no longer want to order more snacks press enter\n\nThe options are:\n"
            "1. Popcorn: $2.50\n2. M&M: $3.00\n"
            "3. Pitachips: $4.50\n4. Orange Juice: $3.25\n5. Water: $2.00", "Choose an amount(maximum is 5)",
            "Please enter a valid snack number(as a digit)", "Sorry, You can only order a total of 5 of each snack"
-           "(because you ordered more than 5 the ones you just ordered will be deducted from your order)")
+           "(because you ordered more than 5 the snacks you just ordered will not be added from your order)")
     payment("\nWill you be paying cash or credit?(enter 1 or 2)\nIf paying with credit "
             "there will be a surcharge of 2% to the final price\nOption 1                "
             "Option 2\nCash                    Credit", "Please enter a valid input(1 or 2)"
