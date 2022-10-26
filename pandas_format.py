@@ -215,4 +215,5 @@ current_ticket = pd.DataFrame(current_user_list, columns=["Name", "Ticket Amount
 total_summary = pd.DataFrame(summary_details, columns=["Profit", "Popcorn", "M&M's", "Pita Chips", "Orange Juice",
                                                        "Water"])
 print(current_ticket)
+print()
 print(total_summary)
